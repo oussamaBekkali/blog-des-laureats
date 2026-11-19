@@ -1,4 +1,4 @@
-# Dossier du Rapport de Projet ()
+# Dossier du Rapport de Projet (`rapport/`)
 
 Ce dossier héberge le rapport technique et académique du projet Blog des lauréats.
 
