@@ -1,5 +1,3 @@
-# Chapitre 2 : Conclusion
-
 # Contexte du projet
 
 Solicode Tanger forme des apprenants aux métiers du développement numérique. À la fin de leur parcours, les lauréats possèdent des retours d'expérience utiles pour les promotions suivantes. Le Blog des Lauréats répond au besoin de rendre ces témoignages accessibles, structurés et durables.

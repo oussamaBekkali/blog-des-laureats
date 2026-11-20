@@ -9,10 +9,11 @@
  * 3. Ajouter automatiquement les nouveaux chapitres
  * 4. Inclure les fichiers vides
  * 5. Generer automatiquement les titres
- * 6. Placer Conclusion toujours a la fin
- * 7. Corriger les chemins des images
- * 8. Verifier les images manquantes
- * 9. Generer rapport-blog.md
+ * 6. Generer la table de matiere
+ * 7. Placer Conclusion toujours a la fin
+ * 8. Corriger les chemins des images
+ * 9. Verifier les images manquantes
+ * 10. Generer rapport-blog.md
  *
  * Usage : node concat-chapitres.js
  */
@@ -80,6 +81,66 @@ function isConclusion(filename) {
   return /(^|[-_\s])conclusion($|[-_\s])/i.test(name);
 }
 
+function normalizeTitle(title) {
+  return title
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/gi, " ")
+    .trim()
+    .toLowerCase();
+}
+
+function isRemovedSectionTitle(title) {
+  return (
+    title === "branche fonctionnelle" ||
+    title === "branche technique" ||
+    /^prototype(?:\s|$)/.test(title)
+  );
+}
+
+function isRemovedChapter(filename) {
+  return isRemovedSectionTitle(normalizeTitle(generateTitle(filename)));
+}
+
+function removeExcludedSections(content) {
+  let removedSectionLevel = 0;
+
+  const withoutExcludedSections = content
+    .split(/\r?\n/)
+    .filter((line) => {
+      const heading = line.match(/^(#{1,6})\s+(.*)$/);
+
+      if (removedSectionLevel) {
+        if (!heading || heading[1].length > removedSectionLevel) {
+          return false;
+        }
+
+        removedSectionLevel = 0;
+      }
+
+      if (heading) {
+        const title = normalizeTitle(
+          heading[2].replace(/^chapitre\s+\d+\s*:\s*/i, ""),
+        );
+
+        if (/\b2TUP\b/i.test(heading[2]) || isRemovedSectionTitle(title)) {
+          removedSectionLevel = heading[1].length;
+          return false;
+        }
+      }
+
+      return true;
+    })
+    .join("\n");
+
+  return withoutExcludedSections
+    .split(/\n\s*\n/)
+    .filter((paragraph) => !/\b2TUP\b/i.test(paragraph))
+    .join("\n\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
 // Trier les chapitres
 function sortChapters(files) {
   const conclusions = files.filter(isConclusion);
@@ -136,6 +197,26 @@ function generateTitle(filename) {
   }
 
   return title;
+}
+
+function getChapterTitle(content, filename) {
+  const headings = [...content.matchAll(/^#{1,6}\s+(.+?)\s*#*\s*$/gm)]
+    .map((match) => match[1].trim())
+    .filter((title) => !/^Chapitre\s+\d+\s*:\s*Conclusion$/i.test(title));
+
+  return headings[0] || generateTitle(filename);
+}
+
+function getChapterAnchor(filename, index) {
+  const slug = path
+    .basename(filename, ".md")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+  return `chapter-${index + 1}-${slug}`;
 }
 
 // ============================================
@@ -201,6 +282,9 @@ function processImages(content, filename) {
           chapter: filename,
           image: imagePath,
         });
+
+        const label = alt.trim() || "Image";
+        return `> **[IMAGE À INSÉRER : ${label}]**`;
       }
 
       // Encoder les espaces pour Markdown
@@ -231,38 +315,70 @@ let compteur = 0;
 let chapitresVides = 0;
 let fichiersSupplementaires = 0;
 
-const fichiersSansNumero = files.filter((file) => getNumber(file) === Infinity);
+const chapters = files
+  .map((file) => {
+    let chapterContent = fs
+      .readFileSync(path.join(CHAPTERS_DIR, file), "utf8")
+      .trim();
+    const empty = !chapterContent;
 
-console.log(`Fichiers detectes : ${files.length}`);
+    if (isRemovedChapter(file)) {
+      return null;
+    }
+
+    if (empty) {
+      const title = generateTitle(file);
+      chapterContent = `# ${title}`;
+      chapitresVides++;
+    } else {
+      chapterContent = removeExcludedSections(chapterContent);
+
+      if (!chapterContent) {
+        return null;
+      }
+    }
+
+    chapterContent = correctConclusion(chapterContent, file);
+
+    return {
+      file,
+      title: getChapterTitle(chapterContent, file),
+      content: chapterContent,
+      empty,
+    };
+  })
+  .filter(Boolean);
+
+const includedFiles = chapters.map((chapter) => chapter.file);
+const includedFilesSansNumero = includedFiles.filter(
+  (file) => getNumber(file) === Infinity,
+);
+
+console.log(`Fichiers detectes : ${chapters.length}`);
 console.log("\n--- DEBUT DE COMPILATION ---\n");
 
-files.forEach((file, index) => {
-  const filePath = path.join(CHAPTERS_DIR, file);
+content += "## Table de matière\n\n";
+content += chapters
+  .map(
+    (item, chapterIndex) =>
+      `- [${item.title.replace(/([\\[\]])/g, "\\$1")}](#${getChapterAnchor(item.file, chapterIndex)})`,
+  )
+  .join("\n");
+content += "\n\n";
 
-  console.log(`[${index + 1}/${files.length}] ${file}`);
+chapters.forEach((chapter, index) => {
+  const { file } = chapter;
+  console.log(`[${index + 1}/${chapters.length}] ${file}`);
 
-  // Lire le contenu
-  let chapterContent = fs.readFileSync(filePath, "utf8").trim();
-
-  // Generer le titre si le fichier est vide
-  if (!chapterContent) {
-    const title = generateTitle(file);
-
-    chapterContent = `# ${title}`;
-
-    console.log(`  + Chapitre vide : titre "${title}" genere`);
-
-    chapitresVides++;
+  if (chapter.empty) {
+    console.log(`  + Chapitre vide : titre "${chapter.title}" genere`);
   }
 
-  // Corriger le titre de conclusion
-  chapterContent = correctConclusion(chapterContent, file);
-
   // Corriger et verifier les images
-  chapterContent = processImages(chapterContent, file);
+  chapter.content = processImages(chapter.content, file);
 
-  // Ajouter le contenu au rapport
-  content += chapterContent + "\n\n";
+  content += `<a id="${getChapterAnchor(file, index)}"></a>\n\n`;
+  content += chapter.content + "\n\n";
 
   // Compter les fichiers sans numero
   if (getNumber(file) === Infinity) {
@@ -270,6 +386,7 @@ files.forEach((file, index) => {
   }
 
   compteur++;
+
 });
 
 // ============================================
@@ -286,17 +403,17 @@ console.log("\n========================================");
 console.log("         BILAN DE COMPILATION");
 console.log("========================================");
 
-console.log(`Total des fichiers detectes : ${files.length}`);
+console.log(`Total des fichiers detectes : ${chapters.length}`);
 console.log(`Chapitres compiles          : ${compteur}`);
 console.log(`Chapitres vides             : ${chapitresVides}`);
 console.log(`Fichiers sans numero        : ${fichiersSupplementaires}`);
 console.log(`Images verifiees            : ${imagesVerifiees}`);
 console.log(`Images manquantes           : ${imagesManquantes.length}`);
 
-if (fichiersSansNumero.length > 0) {
+if (includedFilesSansNumero.length > 0) {
   console.log("\n--- FICHIERS SANS NUMERO ---");
 
-  fichiersSansNumero.forEach((file) => {
+  includedFilesSansNumero.forEach((file) => {
     console.log(`- ${file}`);
   });
 }
