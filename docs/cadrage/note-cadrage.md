@@ -1,102 +1,73 @@
-# Note de Cadrage du Projet — Blog des Lauréats
+# Note de Cadrage — Blog des Lauréats
 
-> **Ingénierie logicielle — Étape 2 : Cadrage & Périmètre Produit**
+**Projet :** Blog des Lauréats  
+**Établissement :** Solicode Tanger  
+**Référent pédagogique :** ESSARRAJ Fouad  
+**Product Owner :** Groupe 1
 
-## 1. Présentation du Projet & Contexte Institutionnel
+## 1. Contexte et Enjeux
 
-Le projet **Blog des Lauréats** vise à centraliser et valoriser les expériences professionnelles, réalisations et conseils de carrière des anciens lauréats de l'EFP, actuellement dispersés sur les réseaux sociaux ou partagés informellement.
+Le Blog des Lauréats est une plateforme web destinée à valoriser les parcours professionnels des anciens apprenants de Solicode.
 
-La plateforme a pour missions de :
+Elle permettra de centraliser les témoignages, les expériences et les réalisations des lauréats afin de faciliter le partage de connaissances entre les différentes promotions et de renforcer la visibilité de la communauté.
 
-- **Valoriser les lauréats :** partager leurs parcours, réalisations et expertises.
-- **Accompagner les apprenants :** faciliter l'accès aux retours d'expérience professionnels.
-- **Dynamiser la communauté :** promouvoir l'excellence technique et le partage des connaissances.
+## 2. Objectif Stratégique SMART
 
-Le projet repose sur deux canaux complémentaires :
+Concevoir et développer une plateforme web responsive permettant aux lauréats de partager leurs expériences professionnelles, aux visiteurs de consulter les articles et les profils, et aux administrateurs de gérer les publications.
 
-- **Plateforme Web :** rédaction, modification, administration, modération et consultation des articles.
-- **Application Mobile :** consultation du catalogue et lecture des articles en mobilité, en mode lecture seule.
+- **Spécifique (S) :** proposer des espaces de consultation, de contribution et d'administration.
+- **Mesurable (M) :** valider les fonctionnalités à travers des tests et des critères d'acceptation définis dans le Product Backlog.
+- **Atteignable (A) :** organiser le développement en sprints Scrum.
+- **Réaliste (R) :** utiliser Laravel, MySQL, Blade, Tailwind CSS, Preline UI et Alpine.js.
+- **Temporel (T) :** livrer un MVP fonctionnel à la fin du cycle de développement.
 
-## 2. Objectifs Stratégiques & SMART
+## 3. Périmètre du Projet
 
-| Critère             | Objectifs                                                                                                                                                                           |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **S — Spécifique**  | Développer une plateforme Web de gestion éditoriale et une application mobile dédiée à la consultation des articles.                                                                |
-| **M — Mesurable**   | Minimum 50 articles publiés au premier trimestre ; chargement d'un article inférieur à 300 ms en conditions normales ; interfaces accessibles et adaptées aux différents terminaux. |
-| **A — Atteignable** | Développement incrémental en sprints Scrum de 80 heures, avec livraison de fonctionnalités testées de bout en bout.                                                                 |
-| **R — Réaliste**    | Stack standardisée : Laravel 13, MySQL, Tailwind CSS, Preline UI et Alpine.js pour le Web, avec une API de consultation pour le Mobile.                                             |
-| **T — Temporel**    | Sprint 0 : cadrage, infrastructure et prototypes ; Sprint 1 : socle technique, persistance et première tranche fonctionnelle ; clôture : déploiement et mise en production.         |
+### In-Scope — Fonctionnalités incluses
 
-**Indicateurs de réussite :**
+- Consultation et recherche des articles.
+- Filtrage par catégories.
+- Consultation des profils des lauréats.
+- Authentification et gestion des profils.
+- Création, modification et soumission des articles.
+- Administration des utilisateurs, catégories et publications.
+- Modération et gestion des statuts des articles.
 
-- **Web :** publication d'au moins 50 articles et temps de chargement inférieur à 300 ms.
-- **Mobile :** accès au catalogue et lecture complète des articles sur smartphone.
+### Out-of-Scope — Fonctionnalités exclues
 
-## 3. Matrice de Périmètre
+- Messagerie instantanée.
+- Paiement et abonnements en ligne.
+- Applications mobiles natives.
+- Réseau social complexe.
+- Recommandations par intelligence artificielle.
+- Synchronisation avec des plateformes externes.
 
-### 3.1. In-Scope — Périmètre inclus
-
-**A. Plateforme Web**
-
-- Consultation des articles par catégories, recherche textuelle et pagination.
-- Authentification sécurisée : inscription, connexion et réinitialisation du mot de passe.
-- Gestion des profils lauréats : nom, biographie, photo, liens LinkedIn et GitHub.
-- Tableau de bord personnel et rédaction avec éditeur riche.
-- Gestion des statuts : **Brouillon → Soumis pour modération → Publié**.
-- Espace d'administration : gestion des utilisateurs, des rôles (RBAC), des catégories et modération des articles (validation, publication, demande de correction avec motif).
-
-**B. Application Mobile**
-
-- Affichage du catalogue des articles.
-- Consultation et lecture complète des articles.
-- Accès en mode lecture seule pour les apprenants et visiteurs en déplacement.
-
-### 3.2. Out-of-Scope — Périmètre exclu
-
-**Sur l'application mobile :**
-
-- Rédaction et modification des articles.
-- Modération et administration.
-- Toute gestion éditoriale, réservée exclusivement à la plateforme Web.
-
-**Globalement :**
-
-- Messagerie instantanée et chat en direct.
-- Paiement en ligne, abonnements payants et dons.
-- Fonctionnalités complexes de réseau social.
-- Notation étoilée et recommandations prédictives par IA.
-- Import/export automatisé depuis Medium, WordPress et autres plateformes.
+Toute modification du périmètre devra être validée par le Product Owner.
 
 ## 4. Parties Prenantes
 
-| Partie prenante                   | Responsabilités                                                              |
-| --------------------------------- | ---------------------------------------------------------------------------- |
-| **Product Owner (Groupe 1)**      | Définition des besoins, priorisation du backlog et validation des livrables. |
-| **Développeurs Web**              | Conception et développement de la plateforme Web et de son API.              |
-| **Développeurs Mobile**           | Développement de l'application mobile de consultation.                       |
-| **Formateurs référents**          | Encadrement, suivi et validation pédagogique.                                |
-| **Visiteurs et apprenants**       | Consultation des articles sur ordinateur et smartphone.                      |
-| **Lauréats (Auteurs)**            | Gestion des profils, rédaction et soumission des articles.                   |
-| **Administrateurs / Modérateurs** | Gestion des utilisateurs, catégories et validation éditoriale.               |
+- **Product Owner — Groupe 1 :** recueillir les besoins, définir les priorités et valider les fonctionnalités.
+- **Équipe de développement :** concevoir, développer et tester la plateforme.
+- **Visiteurs :** consulter les articles et découvrir les lauréats.
+- **Lauréats contributeurs :** partager leurs parcours et leurs expériences professionnelles.
 
-## 5. Risques Identifiés & Stratégies d'Atténuation
+## 5. Contraintes et Facteurs Clés de Succès
 
-| Risque                                 | Stratégie d'atténuation                                                                                |
-| -------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| **Indisponibilité des contenus**       | Préparer un stock initial d'articles et encourager les lauréats à contribuer régulièrement.            |
-| **Non-respect des délais de sprint**   | Prioriser le MVP, suivre le backlog et contrôler régulièrement l'avancement.                           |
-| **Incohérence de l'API Web/Mobile**    | Centraliser les données, standardiser les endpoints et tester les échanges entre les deux plateformes. |
-| **Vulnérabilités et fuite de données** | Authentification sécurisée, hachage des mots de passe et validation des entrées.                       |
-| **Non-conformité réglementaire**       | Respect du RGPD : consentement, droits d'accès, de rectification et de suppression des données.        |
-| **Problèmes d'accessibilité**          | Respect des normes WCAG AA, approche Mobile-First et HTML5 sémantique.                                 |
+**Contraintes techniques :** Laravel, MySQL, Blade, Tailwind CSS, Preline UI et Alpine.js.
 
----
+**Contraintes organisationnelles :** respect des sprints, des priorités et des délais de validation.
 
-**Facteurs clés de succès :**
+**Contraintes réglementaires :** protection des données personnelles conformément à la loi marocaine 09-08 et aux obligations applicables.
 
-- Simplicité et rapidité de rédaction pour les lauréats.
-- Qualité et clarté de lecture pour les apprenants.
-- Fluidité du processus de modération.
-- Cohérence de l'expérience entre les plateformes Web et Mobile.
+**Accessibilité :** interface responsive, navigation au clavier, contrastes adaptés et HTML sémantique, en référence aux WCAG 2.2.
 
-**Synthèse :** Le Blog des Lauréats est une solution institutionnelle à double canal (Web et Mobile), destinée à valoriser les expériences professionnelles et faciliter le partage des connaissances. Son MVP repose sur une gestion éditoriale centralisée via le Web et une application mobile dédiée à la consultation.
+**Facteurs clés de succès :** simplicité d'utilisation, qualité des contenus, fluidité de la modération et sécurité de la plateforme.
+
+## 6. Risques et Stratégies d'Atténuation
+
+| Risques                      | Stratégies d'atténuation                                       |
+| ---------------------------- | -------------------------------------------------------------- |
+| Indisponibilité des contenus | Anticiper la collecte et prévoir des données de démonstration. |
+| Retard des sprints           | Prioriser et décomposer les tâches.                            |
+| Évolution du périmètre       | Faire valider les changements par le Product Owner.            |
+| Problèmes de sécurité        | Protéger les accès et contrôler les autorisations.             |
