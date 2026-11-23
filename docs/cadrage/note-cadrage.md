@@ -1,86 +1,102 @@
-# Note de Cadrage — Blog des Lauréats
+# Note de Cadrage du Projet — Blog des Lauréats
 
 > **Ingénierie logicielle — Étape 2 : Cadrage & Périmètre Produit**
 
-## 1. Contexte et Proposition de Valeur
+## 1. Présentation du Projet & Contexte Institutionnel
 
-Le projet vise à centraliser et valoriser les expériences professionnelles, réalisations et conseils de carrière des lauréats, actuellement dispersés sur des réseaux sociaux ou partagés informellement.
+Le projet **Blog des Lauréats** vise à centraliser et valoriser les expériences professionnelles, réalisations et conseils de carrière des anciens lauréats de l'EFP, actuellement dispersés sur les réseaux sociaux ou partagés informellement.
 
-Le **Blog des Lauréats** est une plateforme institutionnelle permettant de :
+La plateforme a pour missions de :
 
 - **Valoriser les lauréats :** partager leurs parcours, réalisations et expertises.
-- **Accompagner les apprenants :** accéder à des retours d'expérience concrets.
+- **Accompagner les apprenants :** faciliter l'accès aux retours d'expérience professionnels.
 - **Dynamiser la communauté :** promouvoir l'excellence technique et le partage des connaissances.
 
-## 2. Objectifs SMART
+Le projet repose sur deux canaux complémentaires :
 
-| Critère             | Objectif                                                                                                                                                                  |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **S — Spécifique**  | Développer une plateforme web autonome de rédaction, modération, publication et consultation d'articles classés par catégories.                                           |
-| **M — Mesurable**   | Minimum 50 articles publiés au premier trimestre ; chargement inférieur à 300 ms en conditions normales ; interface accessible et responsive (mobile, tablette, desktop). |
-| **A — Atteignable** | Développement incrémental en sprints Scrum de 80 heures, avec fonctionnalités testées de bout en bout.                                                                    |
-| **R — Réaliste**    | Stack standardisée : Laravel 13, MySQL, Tailwind CSS, Preline UI et Alpine.js.                                                                                            |
-| **T — Temporel**    | Sprint 0 : cadrage, infrastructure et prototypes ; Sprint 1 : socle technique, persistance et première fonctionnalité ; clôture : déploiement en production.              |
+- **Plateforme Web :** rédaction, modification, administration, modération et consultation des articles.
+- **Application Mobile :** consultation du catalogue et lecture des articles en mobilité, en mode lecture seule.
 
-## 3. Périmètre du Produit (MVP)
+## 2. Objectifs Stratégiques & SMART
 
-### 3.1. In-Scope — Fonctionnalités incluses
+| Critère             | Objectifs                                                                                                                                                                           |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **S — Spécifique**  | Développer une plateforme Web de gestion éditoriale et une application mobile dédiée à la consultation des articles.                                                                |
+| **M — Mesurable**   | Minimum 50 articles publiés au premier trimestre ; chargement d'un article inférieur à 300 ms en conditions normales ; interfaces accessibles et adaptées aux différents terminaux. |
+| **A — Atteignable** | Développement incrémental en sprints Scrum de 80 heures, avec livraison de fonctionnalités testées de bout en bout.                                                                 |
+| **R — Réaliste**    | Stack standardisée : Laravel 13, MySQL, Tailwind CSS, Preline UI et Alpine.js pour le Web, avec une API de consultation pour le Mobile.                                             |
+| **T — Temporel**    | Sprint 0 : cadrage, infrastructure et prototypes ; Sprint 1 : socle technique, persistance et première tranche fonctionnelle ; clôture : déploiement et mise en production.         |
 
-**A. Consultation publique**
+**Indicateurs de réussite :**
 
-- Accueil avec derniers articles publiés.
-- Lecture détaillée (auteur, date, catégorie, typographie soignée).
-- Filtrage par catégories, recherche textuelle et pagination dynamique.
+- **Web :** publication d'au moins 50 articles et temps de chargement inférieur à 300 ms.
+- **Mobile :** accès au catalogue et lecture complète des articles sur smartphone.
 
-**B. Espace Auteur (Lauréat)**
+## 3. Matrice de Périmètre
 
-- Authentification : inscription, connexion et réinitialisation du mot de passe.
-- Profil : nom, biographie, photo, liens LinkedIn et GitHub.
-- Tableau de bord personnel.
-- Rédaction avec éditeur riche.
-- Cycle de vie des articles : **Brouillon → Soumis pour modération → Publié**.
+### 3.1. In-Scope — Périmètre inclus
 
-**C. Administration et Modération**
+**A. Plateforme Web**
 
-- Tableau de bord des articles soumis.
-- Validation, publication et demande de correction avec motif.
-- Gestion des catégories : création, modification et archivage.
-- Gestion des utilisateurs et des rôles (**RBAC — Role-Based Access Control**).
+- Consultation des articles par catégories, recherche textuelle et pagination.
+- Authentification sécurisée : inscription, connexion et réinitialisation du mot de passe.
+- Gestion des profils lauréats : nom, biographie, photo, liens LinkedIn et GitHub.
+- Tableau de bord personnel et rédaction avec éditeur riche.
+- Gestion des statuts : **Brouillon → Soumis pour modération → Publié**.
+- Espace d'administration : gestion des utilisateurs, des rôles (RBAC), des catégories et modération des articles (validation, publication, demande de correction avec motif).
 
-### 3.2. Out-of-Scope — Fonctionnalités exclues
+**B. Application Mobile**
 
-- Messagerie instantanée et chat (contacts via profils externes).
-- Abonnements payants, dons et monétisation e-commerce.
-- Applications mobiles natives iOS/Android (web responsive privilégié).
+- Affichage du catalogue des articles.
+- Consultation et lecture complète des articles.
+- Accès en mode lecture seule pour les apprenants et visiteurs en déplacement.
+
+### 3.2. Out-of-Scope — Périmètre exclu
+
+**Sur l'application mobile :**
+
+- Rédaction et modification des articles.
+- Modération et administration.
+- Toute gestion éditoriale, réservée exclusivement à la plateforme Web.
+
+**Globalement :**
+
+- Messagerie instantanée et chat en direct.
+- Paiement en ligne, abonnements payants et dons.
+- Fonctionnalités complexes de réseau social.
 - Notation étoilée et recommandations prédictives par IA.
 - Import/export automatisé depuis Medium, WordPress et autres plateformes.
 
-## 4. Contraintes et Exigences
+## 4. Parties Prenantes
 
-### 4.1. Techniques
+| Partie prenante                   | Responsabilités                                                              |
+| --------------------------------- | ---------------------------------------------------------------------------- |
+| **Product Owner (Groupe 1)**      | Définition des besoins, priorisation du backlog et validation des livrables. |
+| **Développeurs Web**              | Conception et développement de la plateforme Web et de son API.              |
+| **Développeurs Mobile**           | Développement de l'application mobile de consultation.                       |
+| **Formateurs référents**          | Encadrement, suivi et validation pédagogique.                                |
+| **Visiteurs et apprenants**       | Consultation des articles sur ordinateur et smartphone.                      |
+| **Lauréats (Auteurs)**            | Gestion des profils, rédaction et soumission des articles.                   |
+| **Administrateurs / Modérateurs** | Gestion des utilisateurs, catégories et validation éditoriale.               |
 
-- Infrastructure classique PHP/MySQL, sans dépendance propriétaire complexe.
-- Architecture en deux couches : **Contrôleur mince → Service métier**.
-- Rendu serveur avec Laravel Blade et Alpine.js ; aucune SPA monolithique ni dépendance lourde côté client.
+## 5. Risques Identifiés & Stratégies d'Atténuation
 
-### 4.2. Réglementaires (RGPD)
-
-- Consentement explicite à l'inscription.
-- Droits d'accès, de rectification et de suppression des données personnelles.
-- Hachage des mots de passe et protection contre les vulnérabilités courantes.
-
-### 4.3. Accessibilité et Ergonomie
-
-- Contraste visuel conforme au niveau **WCAG AA**.
-- Approche **Mobile-First** et interface responsive.
-- HTML5 sémantique compatible avec les lecteurs d'écran.
-
-## 5. Facteurs Clés de Succès
-
-1. **Rédaction :** parcours simple et rapide pour les lauréats.
-2. **Lecture :** expérience claire et agréable pour les apprenants.
-3. **Modération :** processus éditorial fluide et efficace.
+| Risque                                 | Stratégie d'atténuation                                                                                |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| **Indisponibilité des contenus**       | Préparer un stock initial d'articles et encourager les lauréats à contribuer régulièrement.            |
+| **Non-respect des délais de sprint**   | Prioriser le MVP, suivre le backlog et contrôler régulièrement l'avancement.                           |
+| **Incohérence de l'API Web/Mobile**    | Centraliser les données, standardiser les endpoints et tester les échanges entre les deux plateformes. |
+| **Vulnérabilités et fuite de données** | Authentification sécurisée, hachage des mots de passe et validation des entrées.                       |
+| **Non-conformité réglementaire**       | Respect du RGPD : consentement, droits d'accès, de rectification et de suppression des données.        |
+| **Problèmes d'accessibilité**          | Respect des normes WCAG AA, approche Mobile-First et HTML5 sémantique.                                 |
 
 ---
 
-**Synthèse :** Le Blog des Lauréats est une plateforme web institutionnelle centralisant le partage d'expériences professionnelles. Son MVP repose sur trois espaces (public, auteur et administration), une architecture Laravel structurée et un développement agile respectant les exigences techniques, réglementaires et d'accessibilité.
+**Facteurs clés de succès :**
+
+- Simplicité et rapidité de rédaction pour les lauréats.
+- Qualité et clarté de lecture pour les apprenants.
+- Fluidité du processus de modération.
+- Cohérence de l'expérience entre les plateformes Web et Mobile.
+
+**Synthèse :** Le Blog des Lauréats est une solution institutionnelle à double canal (Web et Mobile), destinée à valoriser les expériences professionnelles et faciliter le partage des connaissances. Son MVP repose sur une gestion éditoriale centralisée via le Web et une application mobile dédiée à la consultation.
